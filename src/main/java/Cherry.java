@@ -6,8 +6,7 @@ public class Cherry {
         int count = 0;
         System.out.println("Hello from Cherry!\n" );
         System.out.println("What can I do for you today?\n" );
-
-
+        System.out.println("Bye!");
         System.exit(0);
     }
 }
