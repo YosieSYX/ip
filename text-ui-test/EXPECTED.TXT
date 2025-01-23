@@ -4,8 +4,10 @@ What can I do for you today?
 
 added: todo borrow book
 Now you have 1 tasks in the list!
+Please indicate what type of event this is.
 added: deadline return book /by Sunday
 Now you have 2 tasks in the list!
+Please use 'event <task> /from <start> /to <end>' format.
 added: event project meeting /from Mon 2pm /to 4pm
 Now you have 3 tasks in the list!
 1. [T][ ] todo borrow book
