@@ -13,4 +13,5 @@ Now you have 3 tasks in the list!
 1. [T][ ] todo borrow book
 2. [D][ ] deadline return book (by: Sunday)
 3. [E][ ] event project meeting (from: Mon 2pm to: 4pm)
+Okay, I've removed this task from your task list.
 Bye! See you next time!
