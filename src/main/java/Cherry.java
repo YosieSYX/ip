@@ -27,12 +27,15 @@ public class Cherry {
             }
             else if (input.startsWith("mark")) {
                 int taskNumber = Integer.parseInt(input.split(" ")[1]);
-
-                Task task = tasks.get(taskNumber - 1);
-                task.markAsDone();
-
-                System.out.println("Nice! I've marked this task as done:");
-                System.out.println("  " + task);
+                if (taskNumber > count) {
+                    System.out.println("You don't have this many tasks yet!");
+                }
+                else {
+                    Task task = tasks.get(taskNumber - 1);
+                    task.markAsDone();
+                    System.out.println("Nice! I've marked this task as done:");
+                    System.out.println("  " + task);
+                }
             }
             else if (input.startsWith("unmark")) {
                 int taskNumber = Integer.parseInt(input.split(" ")[1]);
@@ -41,35 +44,84 @@ public class Cherry {
                 System.out.println("Nice! I've marked this task as not done yet:");
                 System.out.println("  " + task);
             }
+            else if (input.startsWith("delete")) {
+                int taskNumber = Integer.parseInt(input.split(" ")[1]);
+                tasks.remove(taskNumber - 1);
+                count--;
+                System.out.println("Okay, I've removed this task from your task list.");
+            }
             else {
                 if (input.startsWith("todo")) {
-                    Task task = new ToDos(input);
-                    tasks.add(task);
-                    System.out.println("added: " + input);
+                    try {
+                        if (input.trim().split("\\s+").length < 2) {
+                            throw new InputException("Please indicate what you want to do.");
+                        } else {
+                            Task task = new ToDos(input);
+                            tasks.add(task);
+                            count++;
+                            System.out.println("added: " + input);
+                            System.out.println("Now you have " + count + " tasks in the list!");
+                        }
+                    } catch (InputException e) {
+                        System.out.println(e);
+                    }
                 }
                 else if (input.startsWith("deadline")) {
-                    String[] parts = input.split(" /by ");
-                    String time = parts[1];
-                    Task task = new Deadline(input, time);
-                    tasks.add(task);
-                    System.out.println("added: " + input);
+                    try {
+                        String[] parts = input.split(" /by ");
+                        if (parts.length < 2) {
+                            throw new InputException("Please use 'deadline <task> /by <time>' format.");
+                        } else {
+
+                            try {
+
+                                String time = parts[1];
+                                Day day = Day.valueOf(time);
+                                Task task = new Deadline(input, time);
+                                tasks.add(task);
+                                count++;
+                                System.out.println("added: " + input);
+                                System.out.println("Now you have " + count + " tasks in the list!");
+                            } catch (IllegalArgumentException e) {
+                                System.out.println("Please use a valid day of the week.");
+                            }
+
+                        }
+                    } catch (InputException e) {
+                        System.out.println(e);
+                    }
                 }
                 else if (input.startsWith("event")) {
-                    String[] parts1 = input.split(" /from ");
-                    String start = parts1[1].split(" /to ")[0];
-                    String[] parts2 = input.split(" /to ");
-                    String end = parts2[1];
-                    Task task = new Events(input, start, end);
-                    tasks.add(task);
-                    System.out.println("added: " + input);
+                    try {
+                        String[] parts1 = input.split(" /from ");
+                        if (parts1.length < 2) {
+                            throw new InputException("Please use 'event <task> /from <start> /to <end>' format.");
+                        }
+                        else {
+                            String start = parts1[1].split(" /to ")[0];
+                            String[] parts2 = input.split(" /to ");
+                            if (parts2.length < 2) {
+                                throw new InputException("Please provide an end time for this event.");
+                            }
+                            else {
+                                String end = parts2[1];
+                                tasks.add(new Events(input, start, end));
+                                count++;
+                                System.out.println("added: " + input);
+                                System.out.println("Now you have " + count + " tasks in the list!");
+                            }
+                        }
+                    } catch (InputException e) {
+                        System.out.println(e);
+                    }
                 }
-                count ++;
-                System.out.println("Now you have " + count + " tasks in the list!");
+                else {
+                    System.out.println("Please indicate what type of event this is.");
+                }
             }
         }
 
         scanner.close();
-
         System.exit(0);
     }
 }

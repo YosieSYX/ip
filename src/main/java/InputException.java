@@ -1,4 +1,10 @@
-package PACKAGE_NAME;
+public class InputException extends Exception{
+    private final String message;
+    public InputException(String message) {
+        this.message = message;
+    }
 
-public class InputException {
+    public String toString() {
+        return this.message;
+    }
 }
