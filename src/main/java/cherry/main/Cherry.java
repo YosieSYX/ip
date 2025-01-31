@@ -3,6 +3,7 @@ package cherry.main;
 import cherry.utils.InputException;
 import cherry.utils.Parser;
 import cherry.utils.Storage;
+import cherry.utils.Ui;
 
 import java.time.LocalDate;
 
@@ -33,6 +34,9 @@ public class Cherry {
                 break;
             } else if (input.equalsIgnoreCase("list")) {
                 tasks.printTasks();
+            } else if (input.startsWith("find")) {
+                String[] parts = parser.parseFind(input);
+                tasks.findTasks(parts[1]);
             } else if (input.startsWith("by")) {
                 String OriDate = input.split("by")[1].trim();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");

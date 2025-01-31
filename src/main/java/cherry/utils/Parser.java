@@ -15,6 +15,18 @@ public class Parser {
         return Integer.parseInt(input.split(" ")[1]);
     }
 
+    public String[] parseFind(String input) {
+        String[] parts = input.split(" ");
+        try {
+            if (parts.length < 2) {
+                throw new InputException("Please enter a key word.");
+            }
+        } catch (InputException e) {
+            System.err.println(e.getMessage());
+        }
+        return parts;
+    }
+
     /**
      * Parses a deadline task from the input string.
      *

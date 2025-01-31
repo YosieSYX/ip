@@ -36,6 +36,10 @@ public class Task implements Serializable {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
     /**
      * Marks the task as done by setting the isDone flag to true.
      */
