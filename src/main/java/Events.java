@@ -8,7 +8,7 @@ public class Events extends Task {
     protected LocalDate end;
 
     public Events(String description, String start, String end) {
-        super(description.split(" /from ")[0]);
+        super(description);
         this.start = parseDate(start);
         this.end = parseDate(end);
     }

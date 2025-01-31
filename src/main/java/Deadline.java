@@ -7,7 +7,7 @@ public class Deadline extends Task {
     protected Object by;
 
     public Deadline(String description, String by) {
-        super(description.split(" /by ")[0]);
+        super(description);
         this.by = parseDateOrDay(by);
     }
 
