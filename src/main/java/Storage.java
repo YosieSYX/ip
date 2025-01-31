@@ -27,69 +27,24 @@ public class Storage {
                 return tasks;
             }
         } catch (IOException e) {
-            System.err.println("Error while initializing storage" );
+            System.err.println("Error while initializing storage");
             return tasks;
         }
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                Task task = convert(line);
-                tasks.add(task);
-            }
-        } catch (IOException e) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+            tasks = (ArrayList<Task>) ois.readObject();
+            System.out.println("Tasks loaded successfully.");
+        } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error reading from file: " + filePath);
         }
         return tasks;
     }
 
-
     public void save(ArrayList<Task> tasks) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
-            for (Task task : tasks) {
-                String[] parts = task.toString().split("] ", 2);
-                char taskType = parts[0].charAt(1);
-                int isDone = parts[0].contains("X") ? 1 : 0;
-                String taskDescription = parts[1];
-                String output = taskType + " " + isDone + " " + taskDescription;
-                bw.write(output);
-                bw.newLine();
-            }
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
+            oos.writeObject(tasks);
         } catch (IOException e) {
             System.err.println("Error writing to file: " + filePath);
         }
-    }
-
-    private Task convert(String string) {
-        Task taskToAdd;
-        String[] parts = string.split(getString() + " ", 3);
-        char taskType = parts[0].charAt(0);
-        String integer = parts[1];
-        String taskDescription = parts[2];
-        switch (taskType) {
-        case 'E':
-            String[] parts1 = taskDescription.split(" /from ");
-            String start = parts1[1].split(" /to ")[0];
-            String[] parts2 = taskDescription.split(" /to ");
-            String end = parts2[1];
-            taskToAdd = new Events(taskDescription, start, end);
-            break;
-        case 'D':
-            String[] timePre = string.split(" /by ");
-            String time = timePre[1];
-            taskToAdd = new Deadline(taskDescription, time);
-            break;
-        default:
-            taskToAdd = new ToDos(taskDescription);
-            break;
-        }
-        if(integer.equals("1")){
-            taskToAdd.markAsDone();
-        }
-        return taskToAdd;
-    }
-
-    private static String getString() {
-        return "";
     }
 }
