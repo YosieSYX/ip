@@ -1,3 +1,5 @@
+package cherry.main;
+
 import java.util.ArrayList;
 
 public class TaskList {

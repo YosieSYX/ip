@@ -1,9 +1,11 @@
+package cherry.utils;
+
 public class Parser {
-    int parseInt(String input) {
+    public int parseInt(String input) {
         return Integer.parseInt(input.split(" ")[1]);
     }
 
-    String[] parseDeadline(String input) {
+    public String[] parseDeadline(String input) {
         String[] parts = input.split(" /by ");
         try {
             if (parts.length < 2) {
@@ -15,7 +17,7 @@ public class Parser {
         return parts;
     }
 
-    String[] parseEvents(String input) {
+    public String[] parseEvents(String input) {
         String[] parts = new String[3];
         try {
             int fromIndex = input.indexOf("/from");
