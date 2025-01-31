@@ -1,11 +1,13 @@
 package cherry.utils;
 
+
 /**
  * The InputException class represents an exception that is thrown
  * when there is an input error.
  */
 public class InputException extends Exception {
     private final String message;
+
 
     /**
      * Constructs an InputException with the specified detail message.
