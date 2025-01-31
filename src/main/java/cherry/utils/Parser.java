@@ -31,8 +31,8 @@ public class Parser {
             }
             else {
                 parts[0] = input.substring(0, fromIndex);
-                parts[1] = input.substring(fromIndex + 5, toIndex);
-                parts[2] = input.substring(toIndex + 3);
+                parts[1] = input.substring(fromIndex + 6, toIndex);
+                parts[2] = input.substring(toIndex + 4);
             }
         } catch (InputException e) {
             System.err.println(e.getMessage());
