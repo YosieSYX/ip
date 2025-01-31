@@ -3,12 +3,14 @@ import java.util.ArrayList;
 
 public class Cherry {
     public static void main(String[] args) {
-        int count = 0;
+        String FILE_PATH = "./data/Cherry.txt";
+        Storage storage = new Storage(FILE_PATH);
+        ArrayList<Task> tasks = storage.load();
+        int count = tasks.size();
         System.out.println("Hello from Cherry!\n" );
         System.out.println("What can I do for you today?\n" );
         Scanner scanner = new Scanner(System.in);
         String input;
-        ArrayList<Task> tasks = new ArrayList<>();
         while (true) {
             input = scanner.nextLine();
 
@@ -35,6 +37,7 @@ public class Cherry {
                     task.markAsDone();
                     System.out.println("Nice! I've marked this task as done:");
                     System.out.println("  " + task);
+                    storage.save(tasks);
                 }
             }
             else if (input.startsWith("unmark")) {
@@ -43,12 +46,14 @@ public class Cherry {
                 task.markAsUndone();
                 System.out.println("Nice! I've marked this task as not done yet:");
                 System.out.println("  " + task);
+                storage.save(tasks);
             }
             else if (input.startsWith("delete")) {
                 int taskNumber = Integer.parseInt(input.split(" ")[1]);
                 tasks.remove(taskNumber - 1);
                 count--;
                 System.out.println("Okay, I've removed this task from your task list.");
+                storage.save(tasks);
             }
             else {
                 if (input.startsWith("todo")) {
@@ -61,9 +66,10 @@ public class Cherry {
                             count++;
                             System.out.println("added: " + input);
                             System.out.println("Now you have " + count + " tasks in the list!");
+                            storage.save(tasks);
                         }
                     } catch (InputException e) {
-                        System.out.println(e);
+                        System.out.println(e.getMessage());
                     }
                 }
                 else if (input.startsWith("deadline")) {
@@ -72,23 +78,22 @@ public class Cherry {
                         if (parts.length < 2) {
                             throw new InputException("Please use 'deadline <task> /by <time>' format.");
                         } else {
-
                             try {
-
                                 String time = parts[1];
                                 Day day = Day.valueOf(time);
-                                Task task = new Deadline(input, time);
+                                Task task = new Deadline(input, day);
                                 tasks.add(task);
                                 count++;
                                 System.out.println("added: " + input);
                                 System.out.println("Now you have " + count + " tasks in the list!");
+                                storage.save(tasks);
                             } catch (IllegalArgumentException e) {
                                 System.out.println("Please use a valid day of the week.");
                             }
 
                         }
                     } catch (InputException e) {
-                        System.out.println(e);
+                        System.out.println(e.getMessage());
                     }
                 }
                 else if (input.startsWith("event")) {
@@ -109,10 +114,11 @@ public class Cherry {
                                 count++;
                                 System.out.println("added: " + input);
                                 System.out.println("Now you have " + count + " tasks in the list!");
+                                storage.save(tasks);
                             }
                         }
                     } catch (InputException e) {
-                        System.out.println(e);
+                        System.out.println(e.getMessage());
                     }
                 }
                 else {
