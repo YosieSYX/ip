@@ -32,6 +32,10 @@ public class Events extends Task {
         }
     }
 
+    public LocalDate getEndDate() {
+        return this.end;
+    }
+
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + formatDate(start) + " to: " + formatDate(end) + ")";

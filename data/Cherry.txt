@@ -1,1 +1,1 @@
-D 0 deadline return book (by: Oct 15 2019)
+D 0 deadline read book (by: Oct 10 2019)

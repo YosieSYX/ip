@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -24,6 +27,24 @@ public class Cherry {
                 } else {
                     for (int i = 0; i < tasks.size(); i++) {
                         System.out.println((i + 1) + ". " + tasks.get(i));
+                    }
+                }
+            }
+            else if (input.startsWith("by")) {
+                String OriDate = input.split("by")[1];
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
+                LocalDate date = LocalDate.parse(OriDate, formatter);
+                for (Task task : tasks) {
+                    if (task instanceof Deadline) {
+                        Deadline deadline = (Deadline) task;
+                        if (deadline.getDateOrDay() != null && deadline.getDateOrDay().equals(date)) {
+                            System.out.println(deadline);
+                        }
+                    } else if (task instanceof Events) {
+                        Events event = (Events) task;
+                        if (event.getEndDate() != null && event.getEndDate().equals(date)) {
+                            System.out.println(event);
+                        }
                     }
                 }
             }

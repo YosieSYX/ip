@@ -11,6 +11,10 @@ public class Deadline extends Task {
         this.by = parseDateOrDay(by);
     }
 
+    public Object getDateOrDay() {
+        return this.by;
+    }
+
     private Object parseDateOrDay(String input) {
         try {
             return Day.valueOf(input);
