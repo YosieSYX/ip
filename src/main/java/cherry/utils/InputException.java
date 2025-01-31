@@ -1,7 +1,8 @@
 package cherry.utils;
 
-public class InputException extends Exception{
+public class InputException extends Exception {
     private final String message;
+
     public InputException(String message) {
         this.message = message;
     }

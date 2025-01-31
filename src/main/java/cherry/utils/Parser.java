@@ -23,13 +23,12 @@ public class Parser {
             int fromIndex = input.indexOf("/from");
             int toIndex = input.indexOf("/to");
 
-            if(fromIndex == -1) {
+            if (fromIndex == -1) {
                 throw new InputException("Please use 'event <task> /from <start> /to <end>' format.");
             }
             if (toIndex == -1) {
                 throw new InputException("Please provide an end time for this event.");
-            }
-            else {
+            } else {
                 parts[0] = input.substring(0, fromIndex);
                 parts[1] = input.substring(fromIndex + 6, toIndex);
                 parts[2] = input.substring(toIndex + 4);

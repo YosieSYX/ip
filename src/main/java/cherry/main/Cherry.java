@@ -1,9 +1,13 @@
 package cherry.main;
+
 import cherry.utils.InputException;
 import cherry.utils.Parser;
 import cherry.utils.Storage;
-import cherry.utils.Ui;
+
 import java.time.LocalDate;
+
+import cherry.utils.Ui;
+
 import java.time.format.DateTimeFormatter;
 
 public class Cherry {
@@ -27,11 +31,9 @@ public class Cherry {
             if (input.equalsIgnoreCase("bye")) {
                 ui.showGoodbyeMessage();
                 break;
-            }
-            else if (input.equalsIgnoreCase("list")) {
+            } else if (input.equalsIgnoreCase("list")) {
                 tasks.printTasks();
-            }
-            else if (input.startsWith("by")) {
+            } else if (input.startsWith("by")) {
                 String OriDate = input.split("by")[1].trim();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
                 LocalDate date = LocalDate.parse(OriDate, formatter);
@@ -48,32 +50,27 @@ public class Cherry {
                         }
                     }
                 }
-            }
-            else if (input.startsWith("mark")) {
+            } else if (input.startsWith("mark")) {
                 int taskNumber = parser.parseInt(input);
                 if (taskNumber > count) {
                     ui.showErrorMessage("You don't have this many tasks yet!");
-                }
-                else {
+                } else {
                     tasks.markAsDone(taskNumber - 1);
                     ui.showReceivedMessage("Nice! I've marked this task as done:");
                     storage.save(tasks.toList());
                 }
-            }
-            else if (input.startsWith("unmark")) {
+            } else if (input.startsWith("unmark")) {
                 int taskNumber = parser.parseInt(input);
                 tasks.markAsUndone(taskNumber - 1);
                 ui.showReceivedMessage("Nice! I've marked this task as not done yet:");
                 storage.save(tasks.toList());
-            }
-            else if (input.startsWith("delete")) {
+            } else if (input.startsWith("delete")) {
                 int taskNumber = parser.parseInt(input);
                 tasks.removeTask(taskNumber - 1);
                 count--;
                 ui.showReceivedMessage("Okay, I've removed this task from your task list.");
                 storage.save(tasks.toList());
-            }
-            else {
+            } else {
                 if (input.startsWith("todo")) {
                     try {
                         if (input.trim().split("\\s+").length < 2) {
@@ -89,8 +86,7 @@ public class Cherry {
                     } catch (InputException e) {
                         System.out.println(e.getMessage());
                     }
-                }
-                else if (input.startsWith("deadline")) {
+                } else if (input.startsWith("deadline")) {
                     String[] parts = parser.parseDeadline(input);
                     String time = parts[1];
                     Task task = new Deadline(parts[0], time);
@@ -99,8 +95,7 @@ public class Cherry {
                     ui.showReceivedMessage("added: " + input);
                     ui.showReceivedMessage("Now you have " + count + " tasks in the list!");
                     storage.save(tasks.toList());
-                }
-                else if (input.startsWith("event")) {
+                } else if (input.startsWith("event")) {
                     String[] parts = parser.parseEvents(input);
                     String description = parts[0];
                     String start = parts[1];
@@ -110,8 +105,7 @@ public class Cherry {
                     ui.showReceivedMessage("added: " + input);
                     ui.showReceivedMessage("Now you have " + count + " tasks in the list!");
                     storage.save(tasks.toList());
-                }
-                else {
+                } else {
                     ui.showErrorMessage("please give a valid todo");
                 }
             }
@@ -122,6 +116,6 @@ public class Cherry {
     }
 
     public static void main(String[] args) {
-        new Cherry( "./data/Tasks.txt").run();
+        new Cherry("./data/Tasks.txt").run();
     }
 }
