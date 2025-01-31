@@ -1,2 +1,1 @@
-T 1 todo read book
-T 0 todo borrow book
+D 0 deadline return book (by: Oct 15 2019)

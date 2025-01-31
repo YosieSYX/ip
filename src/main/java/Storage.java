@@ -77,8 +77,7 @@ public class Storage {
         case 'D':
             String[] timePre = string.split(" /by ");
             String time = timePre[1];
-            Day day = Day.valueOf(time);
-            taskToAdd = new Deadline(taskDescription, day);
+            taskToAdd = new Deadline(taskDescription, time);
             break;
         default:
             taskToAdd = new ToDos(taskDescription);

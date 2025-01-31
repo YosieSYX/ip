@@ -80,8 +80,7 @@ public class Cherry {
                         } else {
                             try {
                                 String time = parts[1];
-                                Day day = Day.valueOf(time);
-                                Task task = new Deadline(input, day);
+                                Task task = new Deadline(input, time);
                                 tasks.add(task);
                                 count++;
                                 System.out.println("added: " + input);

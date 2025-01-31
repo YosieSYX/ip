@@ -1,16 +1,39 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Events extends Task {
 
-    protected String start;
-    protected String end;
+    protected LocalDate start;
+    protected LocalDate end;
 
     public Events(String description, String start, String end) {
         super(description.split(" /from ")[0]);
-        this.start = start;
-        this.end = end;
+        this.start = parseDate(start);
+        this.end = parseDate(end);
+    }
+
+    private LocalDate parseDate(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        try {
+            return LocalDate.parse(date, formatter);
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+            return null;
+        }
+    }
+
+    private String formatDate(Object date) {
+        if (date instanceof LocalDate) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
+            return ((LocalDate) date).format(formatter);
+        } else {
+            return "No date set.";
+        }
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + start + " to: " + end + ")";
+        return "[E]" + super.toString() + " (from: " + formatDate(start) + " to: " + formatDate(end) + ")";
     }
 }
