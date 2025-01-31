@@ -31,7 +31,7 @@ public class Cherry {
                 }
             }
             else if (input.startsWith("by")) {
-                String OriDate = input.split("by")[1];
+                String OriDate = input.split("by")[1].trim();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
                 LocalDate date = LocalDate.parse(OriDate, formatter);
                 for (Task task : tasks) {
