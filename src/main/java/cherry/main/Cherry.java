@@ -5,18 +5,25 @@ import cherry.utils.Parser;
 import cherry.utils.Storage;
 import cherry.utils.Ui;
 
+import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 
-import cherry.utils.Ui;
 
-import java.time.format.DateTimeFormatter;
-
+/**
+ * The Cherry class represents a task management application.
+ * It loads tasks from a file, processes user input, and manages task operations.
+ */
 public class Cherry {
     private final Storage storage;
     private final TaskList tasks;
     private final Ui ui;
     private final Parser parser;
 
+    /**
+     * Constructs a Cherry application instance.
+     *
+     * @param filePath the file path for storing task data
+     */
     public Cherry(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -24,7 +31,12 @@ public class Cherry {
         parser = new Parser();
     }
 
+    /**
+     * Runs the Cherry application, processing user input in a loop until termination.
+     */
+    @SuppressWarnings("checkstyle:LocalVariableName")
     public void run() {
+
         int count = tasks.count();
         ui.showWelcomeMessage();
         String input = ui.getUserInput();
@@ -119,6 +131,11 @@ public class Cherry {
         System.exit(0);
     }
 
+    /**
+     * The main method to start the Cherry application.
+     *
+     * @param args command-line arguments (not used)
+     */
     public static void main(String[] args) {
         new Cherry("./data/Tasks.txt").run();
     }
