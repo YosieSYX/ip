@@ -40,7 +40,7 @@ public class Cherry {
             return tasks.getTasks();
         } else if (input.startsWith("find")) {
             String[] parts = parser.parseFind(input);
-            return tasks.findTasks(parts[1]);
+            return tasks.findTasks(parts);
         } else if (input.startsWith("by")) {
             try {
                 String OriDate = input.split("by")[1].trim();

@@ -109,28 +109,27 @@ public class TaskList {
     }
 
     /**
-     * Finds and lists all tasks containing the specified keyword in their description.
-     * The method searches through the list of tasks and checks if the description of each task
-     * contains the given keyword. It returns a formatted string with the matching tasks or a message
-     * indicating that no tasks were found.
+     * Searches for tasks containing any of the provided keywords in their descriptions.
      *
-     * @param keyword The keyword to search for within the task descriptions.
-     * @return A formatted string containing the list of matching tasks, or a message
-     * indicating no tasks matched the keyword.
+     * @param keywords One or more keywords to search for in task descriptions.
+     * @return A string containing the list of tasks that match the keywords, or a message stating no matches were found.
      */
-    public String findTasks(String keyword) {
-        StringBuilder response = new StringBuilder("Here are the matching tasks in your list:\n");
+    public String findTasks(String... keywords) {
+        StringBuilder response = new StringBuilder();
         int count = 1;
         boolean found = false;
         for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).getDescription().contains(keyword)) {
-                response.append(count).append(". ").append(tasks.get(i)).append("\n");
-                count++;
-                found = true;
+            for (String keyword : keywords) {
+                if (tasks.get(i).getDescription().contains(keyword)) {
+                    response.append(count).append(". ").append(tasks.get(i)).append("\n");
+                    count++;
+                    found = true;
+                    break;
+                }
             }
         }
         if (!found) {
-            response.append("No matching tasks found for this keyword.");
+            response.append("Sorry, no matching tasks found for the given keywords.");
         }
         return response.toString();
     }
