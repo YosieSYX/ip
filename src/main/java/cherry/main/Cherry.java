@@ -31,112 +31,91 @@ public class Cherry {
         parser = new Parser();
     }
 
-    /**
-     * Runs the Cherry application, processing user input in a loop until termination.
-     */
-    @SuppressWarnings("checkstyle:LocalVariableName")
-    public void run() {
-
+    public String getResponse(String input) {
         int count = tasks.count();
-        ui.showWelcomeMessage();
-        String input = ui.getUserInput();
-        while (true) {
-            if (input.equalsIgnoreCase("bye")) {
-                ui.showGoodbyeMessage();
-                break;
-            } else if (input.equalsIgnoreCase("list")) {
-                tasks.printTasks();
-            } else if (input.startsWith("find")) {
-                String[] parts = parser.parseFind(input);
-                tasks.findTasks(parts[1]);
-            } else if (input.startsWith("by")) {
+
+        if (input.equalsIgnoreCase("bye")) {
+            return "Goodbye! Hope to see you again!";
+        } else if (input.equalsIgnoreCase("list")) {
+            return tasks.getTasks();
+        } else if (input.startsWith("find")) {
+            String[] parts = parser.parseFind(input);
+            return tasks.findTasks(parts[1]);
+        } else if (input.startsWith("by")) {
+            try {
                 String OriDate = input.split("by")[1].trim();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
                 LocalDate date = LocalDate.parse(OriDate, formatter);
+
+                StringBuilder result = new StringBuilder();
                 for (Task task : tasks.toList()) {
                     if (task instanceof Deadline) {
                         Deadline deadline = (Deadline) task;
-                        if (deadline.getDateOrDay() != null && deadline.getDateOrDay().equals(date)) {
-                            System.out.println(deadline);
+                        if (date.equals(deadline.getDateOrDay())) {
+                            result.append(deadline).append("\n");
                         }
                     } else if (task instanceof Events) {
                         Events event = (Events) task;
-                        if (event.getEndDate() != null && event.getEndDate().equals(date)) {
-                            System.out.println(event);
+                        if (date.equals(event.getEndDate())) {
+                            result.append(event).append("\n");
                         }
                     }
                 }
-            } else if (input.startsWith("mark")) {
-                int taskNumber = parser.parseInt(input);
-                if (taskNumber > count) {
-                    ui.showErrorMessage("You don't have this many tasks yet!");
-                } else {
-                    tasks.markAsDone(taskNumber - 1);
-                    ui.showReceivedMessage("Nice! I've marked this task as done:");
-                    storage.save(tasks.toList());
-                }
-            } else if (input.startsWith("unmark")) {
-                int taskNumber = parser.parseInt(input);
-                tasks.markAsUndone(taskNumber - 1);
-                ui.showReceivedMessage("Nice! I've marked this task as not done yet:");
-                storage.save(tasks.toList());
-            } else if (input.startsWith("delete")) {
-                int taskNumber = parser.parseInt(input);
-                tasks.removeTask(taskNumber - 1);
-                count--;
-                ui.showReceivedMessage("Okay, I've removed this task from your task list.");
-                storage.save(tasks.toList());
-            } else {
-                if (input.startsWith("todo")) {
-                    try {
-                        if (input.trim().split("\\s+").length < 2) {
-                            throw new InputException("Please indicate what you want to do.");
-                        } else {
-                            Task task = new ToDos(input);
-                            tasks.addTask(task);
-                            count++;
-                            ui.showReceivedMessage("added: " + input);
-                            ui.showReceivedMessage("Now you have " + count + " tasks in the list!");
-                            storage.save(tasks.toList());
-                        }
-                    } catch (InputException e) {
-                        System.out.println(e.getMessage());
-                    }
-                } else if (input.startsWith("deadline")) {
-                    String[] parts = parser.parseDeadline(input);
-                    String time = parts[1];
-                    Task task = new Deadline(parts[0], time);
-                    tasks.addTask(task);
-                    count++;
-                    ui.showReceivedMessage("added: " + input);
-                    ui.showReceivedMessage("Now you have " + count + " tasks in the list!");
-                    storage.save(tasks.toList());
-                } else if (input.startsWith("event")) {
-                    String[] parts = parser.parseEvents(input);
-                    String description = parts[0];
-                    String start = parts[1];
-                    String end = parts[2];
-                    tasks.addTask(new Events(description, start, end));
-                    count++;
-                    ui.showReceivedMessage("added: " + input);
-                    ui.showReceivedMessage("Now you have " + count + " tasks in the list!");
-                    storage.save(tasks.toList());
-                } else {
-                    ui.showErrorMessage("please give a valid todo");
-                }
+                return result.length() > 0 ? result.toString() : "No tasks found for that date.";
+            } catch (Exception e) {
+                return "Invalid date format! Use: MMM dd yyyy (e.g., Jan 01 2024)";
             }
-            input = ui.getUserInput();
+        } else if (input.startsWith("mark")) {
+            int taskNumber = parser.parseInt(input);
+            if (taskNumber > count) {
+                return "You don't have this many tasks yet!";
+            }
+            tasks.markAsDone(taskNumber - 1);
+            storage.save(tasks.toList());
+            return "Nice! I've marked this task as done.";
+        } else if (input.startsWith("unmark")) {
+            int taskNumber = parser.parseInt(input);
+            tasks.markAsUndone(taskNumber - 1);
+            storage.save(tasks.toList());
+            return "Nice! I've marked this task as not done yet.";
+        } else if (input.startsWith("delete")) {
+            int taskNumber = parser.parseInt(input);
+            tasks.removeTask(taskNumber - 1);
+            storage.save(tasks.toList());
+            return "Okay, I've removed this task from your task list.";
+        } else if (input.startsWith("todo")) {
+            try {
+                if (input.trim().split("\\s+").length < 2) {
+                    throw new InputException("Please indicate what you want to do.");
+                }
+                Task task = new ToDos(input.substring(5).trim());
+                tasks.addTask(task);
+                storage.save(tasks.toList());
+                return "Added: " + input + "\nNow you have " + tasks.count() + " tasks in the list!";
+            } catch (InputException e) {
+                return e.getMessage();
+            }
+        } else if (input.startsWith("deadline")) {
+            String[] parts = parser.parseDeadline(input);
+            Task task = new Deadline(parts[0], parts[1]);
+            tasks.addTask(task);
+            storage.save(tasks.toList());
+            return "Added: " + input + "\nNow you have " + tasks.count() + " tasks in the list!";
+        } else if (input.startsWith("event")) {
+            String[] parts = parser.parseEvents(input);
+            tasks.addTask(new Events(parts[0], parts[1], parts[2]));
+            storage.save(tasks.toList());
+            return "Added: " + input + "\nNow you have " + tasks.count() + " tasks in the list!";
         }
-        ui.close();
-        System.exit(0);
+
+        return "Please give a valid command!";
     }
 
-    /**
-     * The main method to start the Cherry application.
-     *
-     * @param args command-line arguments (not used)
-     */
+    /*
     public static void main(String[] args) {
         new Cherry("./data/Tasks.txt").run();
     }
+    */
+
 }
+

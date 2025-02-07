@@ -109,22 +109,39 @@ public class TaskList {
     }
 
     /**
-     * Finds tasks that contain the specified keyword in their descriptions.
+     * Finds and lists all tasks containing the specified keyword in their description.
+     * The method searches through the list of tasks and checks if the description of each task
+     * contains the given keyword. It returns a formatted string with the matching tasks or a message
+     * indicating that no tasks were found.
      *
-     * @param keyword The keyword to search for.
+     * @param keyword The keyword to search for within the task descriptions.
+     * @return A formatted string containing the list of matching tasks, or a message
+     * indicating no tasks matched the keyword.
      */
-    public void findTasks(String keyword) {
-        System.out.println("Here are the matching tasks in your list:");
+    public String findTasks(String keyword) {
+        StringBuilder response = new StringBuilder("Here are the matching tasks in your list:\n");
         int count = 1;
+        boolean found = false;
         for (int i = 0; i < tasks.size(); i++) {
             if (tasks.get(i).getDescription().contains(keyword)) {
-                System.out.println(count + ". " + tasks.get(i));
+                response.append(count).append(". ").append(tasks.get(i)).append("\n");
                 count++;
+                found = true;
             }
         }
-        if (count == 1) {
-            System.out.println("No matching tasks found for this keyword.");
+        if (!found) {
+            response.append("No matching tasks found for this keyword.");
         }
+        return response.toString();
+    }
+
+
+    public String getTasks() {
+        StringBuilder list = new StringBuilder();
+        for (int i = 0; i < tasks.size(); i++) {
+            list.append((i + 1) + ". " + tasks.get(i) + "\n");
+        }
+        return list.toString();
     }
 
     /**
