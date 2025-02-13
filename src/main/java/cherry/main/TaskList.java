@@ -74,12 +74,11 @@ public class TaskList {
      * @return The task at the specified index, or null if the index is invalid.
      */
     public Task getTask(int index) {
-        if (index >= 0 && index < tasks.size()) {
-            return tasks.get(index);
-        } else {
+        if (index < 0 || index >= tasks.size()) {
             System.out.println("Invalid index.");
             return null;
         }
+        return tasks.get(index);
     }
 
     /**
@@ -90,9 +89,8 @@ public class TaskList {
      */
     public void markAsDone(int index) {
         Task task = getTask(index);
-        if (task != null) {
-            task.markAsDone();
-        }
+        assert task != null : "this task does not exist";
+        task.markAsDone();
     }
 
     /**
@@ -103,16 +101,16 @@ public class TaskList {
      */
     public void markAsUndone(int index) {
         Task task = getTask(index);
-        if (task != null) {
-            task.markAsUndone();
-        }
+        assert task != null : "this task does not exist";
+        task.markAsUndone();
     }
 
     /**
      * Searches for tasks containing any of the provided keywords in their descriptions.
      *
      * @param keywords One or more keywords to search for in task descriptions.
-     * @return A string containing the list of tasks that match the keywords, or a message stating no matches were found.
+     * @return A string containing the list of tasks that match the keywords,
+     * or a message stating no matches were found.
      */
     public String findTasks(String... keywords) {
         StringBuilder response = new StringBuilder();
