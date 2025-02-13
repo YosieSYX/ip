@@ -51,12 +51,11 @@ public class Events extends Task {
      * @return A formatted string representing the date, or "No date set." if the input is invalid.
      */
     private String formatDate(Object date) {
-        if (date instanceof LocalDate) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
-            return ((LocalDate) date).format(formatter);
-        } else {
+        if (!(date instanceof LocalDate)) {
             return "No date set.";
         }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
+        return ((LocalDate) date).format(formatter);
     }
 
     /**
