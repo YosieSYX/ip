@@ -70,6 +70,7 @@ public class Storage {
     public void save(ArrayList<Task> tasks) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(tasks);
+            assert new File(filePath).exists() : "File should exist after saving tasks";
         } catch (IOException e) {
             System.err.println("Error writing to file: " + filePath);
         }

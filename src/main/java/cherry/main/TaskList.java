@@ -60,6 +60,7 @@ public class TaskList {
      */
     public void removeTask(int index) {
         if (index >= 0 && index < tasks.size()) {
+            assert index >= 0 && index < tasks.size() : "Index out of bounds";
             tasks.remove(index);
         } else {
             System.out.println("Invalid index.");
@@ -89,7 +90,7 @@ public class TaskList {
      */
     public void markAsDone(int index) {
         Task task = getTask(index);
-        assert task != null : "this task does not exist";
+        assert task != null : "Task should not be null";
         task.markAsDone();
     }
 
@@ -101,7 +102,7 @@ public class TaskList {
      */
     public void markAsUndone(int index) {
         Task task = getTask(index);
-        assert task != null : "this task does not exist";
+        assert task != null : "Task should not be null";
         task.markAsUndone();
     }
 
