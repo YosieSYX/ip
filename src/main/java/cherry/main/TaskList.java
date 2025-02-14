@@ -1,6 +1,9 @@
 package cherry.main;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Represents a list of tasks and provides methods to manage them.
@@ -112,28 +115,23 @@ public class TaskList {
      * Searches for tasks containing any of the provided keywords in their descriptions.
      *
      * @param keywords One or more keywords to search for in task descriptions.
-     * @return A string containing the list of tasks that match the keywords, or a message stating no matches were found.
+     * @return A string containing the list of tasks that match the keywords,
+     * or a message stating no matches were found.
      */
     public String findTasks(String... keywords) {
-        StringBuilder response = new StringBuilder();
-        int count = 1;
-        boolean found = false;
-        for (int i = 0; i < tasks.size(); i++) {
-            for (String keyword : keywords) {
-                if (tasks.get(i).getDescription().contains(keyword)) {
-                    response.append(count).append(". ").append(tasks.get(i)).append("\n");
-                    count++;
-                    found = true;
-                    break;
-                }
-            }
-        }
-        if (!found) {
-            response.append("Sorry, no matching tasks found for the given keywords.");
-        }
-        return response.toString();
-    }
+        List<Task> matchingTasks = tasks.stream()
+                .filter(task -> java.util.Arrays.stream(keywords)
+                        .anyMatch(task.getDescription()::contains))
+                .toList();
 
+        if (matchingTasks.isEmpty()) {
+            return "Sorry, no matching tasks found for the given keywords.";
+        }
+
+        return IntStream.range(0, matchingTasks.size())
+                .mapToObj(i -> (i + 1) + ". " + matchingTasks.get(i))
+                .collect(Collectors.joining("\n"));
+    }
 
     public String getTasks() {
         StringBuilder list = new StringBuilder();
