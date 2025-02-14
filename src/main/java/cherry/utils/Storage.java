@@ -1,7 +1,5 @@
 package cherry.utils;
 
-import cherry.main.Task;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -9,6 +7,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+
+import cherry.main.Task;
+
 
 /**
  * The Storage class handles the loading and saving of tasks to a file.
@@ -70,6 +71,7 @@ public class Storage {
     public void save(ArrayList<Task> tasks) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(tasks);
+            assert new File(filePath).exists() : "File should exist after saving tasks";
         } catch (IOException e) {
             System.err.println("Error writing to file: " + filePath);
         }
