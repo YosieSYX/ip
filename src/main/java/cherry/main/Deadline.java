@@ -1,10 +1,10 @@
 package cherry.main;
 
-import cherry.utils.Day;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
+import cherry.utils.Day;
 
 /**
  * Represents a task with a specific deadline.
@@ -18,7 +18,7 @@ public class Deadline extends Task {
      * Constructs a new Deadline task with the given description and deadline.
      *
      * @param description The description of the task.
-     * @param by The deadline of the task, which can be a date (yyyy-MM-dd) or a day of the week.
+     * @param by          The deadline of the task, which can be a date (yyyy-MM-dd) or a day of the week.
      */
     public Deadline(String description, String by) {
         super(description);

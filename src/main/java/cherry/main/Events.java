@@ -17,8 +17,8 @@ public class Events extends Task {
      * Constructs a new Events task with the given description, start date, and end date.
      *
      * @param description The description of the event task.
-     * @param start The start date of the event in the format yyyy-MM-dd.
-     * @param end The end date of the event in the format yyyy-MM-dd.
+     * @param start       The start date of the event in the format yyyy-MM-dd.
+     * @param end         The end date of the event in the format yyyy-MM-dd.
      */
     public Events(String description, String start, String end) {
         super(description);
@@ -51,12 +51,11 @@ public class Events extends Task {
      * @return A formatted string representing the date, or "No date set." if the input is invalid.
      */
     private String formatDate(Object date) {
-        if (date instanceof LocalDate) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
-            return ((LocalDate) date).format(formatter);
-        } else {
+        if (!(date instanceof LocalDate)) {
             return "No date set.";
         }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
+        return ((LocalDate) date).format(formatter);
     }
 
     /**

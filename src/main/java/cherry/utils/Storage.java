@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 import cherry.main.Task;
 
-
 /**
  * The Storage class handles the loading and saving of tasks to a file.
  */
