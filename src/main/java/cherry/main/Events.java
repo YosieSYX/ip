@@ -74,6 +74,9 @@ public class Events extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + formatDate(start) + " to: " + formatDate(end) + ")";
+        if (super.tag.isEmpty()) {
+            return "[E]" + super.toString() + " (from: " + formatDate(start) + " to: " + formatDate(end) + ")";
+        }
+        return "[E]" + super.toString() + " (from: " + formatDate(start) + " to: " + formatDate(end) + ")" + " -" + super.tag;
     }
 }

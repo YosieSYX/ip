@@ -85,6 +85,9 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + formatDate(by) + ")";
+        if (super.tag.isEmpty()) {
+            return "[D]" + super.toString() + " (by: " + formatDate(by) + ")";
+        }
+        return "[D]" + super.toString() + " (by: " + formatDate(by) + ")" + " -" + super.tag;
     }
 }

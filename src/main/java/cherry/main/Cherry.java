@@ -57,6 +57,8 @@ public class Cherry {
             return handleDeadline(input);
         } else if (input.startsWith("event")) {
             return handleEvent(input);
+        } else if (input.startsWith("tag")) {
+            return handleTag(input);
         }
         return "Please give a valid command!";
     }
@@ -127,6 +129,14 @@ public class Cherry {
         tasks.markAsDone(taskNumber - 1);
         storage.save(tasks.toList());
         return "Nice! I've marked this task as done.";
+    }
+
+    private String handleTag(String input) {
+        int taskNumber = parser.parseInt(input);
+        String tagName = parser.parseTag(input);
+        tasks.tagTask(taskNumber - 1, tagName);
+        storage.save(tasks.toList());
+        return "Alright, I've tagged this task for you";
     }
 
     /**

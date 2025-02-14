@@ -14,6 +14,7 @@ public class Task implements Serializable {
 
     protected String description;
     protected boolean isDone;
+    protected String tag;
 
     /**
      * Constructs a new Task with the given description.
@@ -24,6 +25,7 @@ public class Task implements Serializable {
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        this.tag = "";
     }
 
     /**
@@ -52,6 +54,10 @@ public class Task implements Serializable {
      */
     public void markAsUndone() {
         this.isDone = false;
+    }
+
+    public void tag(String tagName) {
+        this.tag = tagName;
     }
 
     /**

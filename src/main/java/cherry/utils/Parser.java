@@ -16,6 +16,22 @@ public class Parser {
     }
 
     /**
+     * Parses the input string and returns the third word.
+     *
+     * @param input The input string containing words separated by spaces.
+     * @return The third word in the input string.
+     * @throws IllegalArgumentException if the input has fewer than three words.
+     */
+    public String parseTag(String input) {
+        String[] parts = input.split(" ");
+        if (parts.length < 3) {
+            throw new IllegalArgumentException("Input must contain at least three words.");
+        }
+        return parts[2];
+    }
+
+
+    /**
      * Parses the input string for the "find" command and extracts the keywords.
      *
      * @param input The user input string containing the "find" command followed by keywords.

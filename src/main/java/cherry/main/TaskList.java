@@ -109,6 +109,12 @@ public class TaskList {
         task.markAsUndone();
     }
 
+    public void tagTask(int index, String tagName) {
+        Task task = getTask(index);
+        assert task != null : "Task should not be null";
+        task.tag(tagName);
+    }
+
     /**
      * Searches for tasks containing any of the provided keywords in their descriptions.
      *
