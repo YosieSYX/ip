@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
  * This class allows adding, removing, marking tasks as done or undone, and printing the list of tasks.
  */
 public class TaskList {
-    private final ArrayList<Task> tasks;
+    private ArrayList<Task> tasks;
 
     /**
      * Constructs an empty TaskList.
