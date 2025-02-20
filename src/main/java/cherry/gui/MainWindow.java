@@ -22,8 +22,6 @@ public class MainWindow extends AnchorPane {
     private TextField userInput;
     @FXML
     private Button sendButton;
-    @FXML
-    private Label chatboxName;
 
     private Cherry cherry;
 
@@ -33,7 +31,6 @@ public class MainWindow extends AnchorPane {
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
-        chatboxName.setText("Cherry");
     }
 
     private void showWelcomeMessage() {
