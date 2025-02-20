@@ -27,8 +27,8 @@ public class MainWindow extends AnchorPane {
 
     private Cherry cherry;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
-    private Image cherryImage = new Image(this.getClass().getResourceAsStream("/images/Cherry.png"));
+    private Image cherryImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/Cherry.png"));
 
     @FXML
     public void initialize() {
@@ -36,11 +36,17 @@ public class MainWindow extends AnchorPane {
         chatboxName.setText("Cherry");
     }
 
+    private void showWelcomeMessage() {
+        dialogContainer.getChildren().add(DialogBox.getCherryDialog(cherry.displayWelcomeMessage(), cherryImage));
+    }
+
+
     /**
      * Injects the Cherry instance
      */
     public void setCherry(Cherry d) {
         cherry = d;
+        showWelcomeMessage();
     }
 
     /**

@@ -216,5 +216,9 @@ public class Cherry {
         storage.save(tasks.toList());
         return "Added: " + input + "\nNow you have " + tasks.count() + " tasks in the list!";
     }
+
+    public String displayWelcomeMessage() {
+        return "Hi, I'm Cherry. I'm here to help you manage your tasks!";
+    }
 }
 
