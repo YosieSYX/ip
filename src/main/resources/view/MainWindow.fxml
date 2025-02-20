@@ -12,7 +12,7 @@
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="cherry.gui.MainWindow">
 
     <!-- Main Container -->
-    <VBox spacing="10.0" AnchorPane.topAnchor="40.0" AnchorPane.bottomAnchor="0.0"
+    <VBox spacing="5.0" AnchorPane.topAnchor="40.0" AnchorPane.bottomAnchor="0.0"
           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 
         <!-- ScrollPane for Chat History -->
@@ -24,7 +24,7 @@
         </ScrollPane>
 
         <!-- HBox for User Input and Send Button -->
-        <HBox spacing="5.0" alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+        <HBox spacing="3.0" alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
               AnchorPane.bottomAnchor="0.0">
             <TextField fx:id="userInput" onAction="#handleUserInput"
                        HBox.hgrow="ALWAYS"/>
