@@ -89,7 +89,7 @@ public class Parser {
                 throw new InputException("Please provide an end time for this event.");
             } else {
                 parts[0] = input.substring(0, fromIndex);
-                parts[1] = input.substring(fromIndex + 6, toIndex);
+                parts[1] = input.substring(fromIndex + 6, toIndex - 1);
                 parts[2] = input.substring(toIndex + 4);
             }
         } catch (InputException e) {
