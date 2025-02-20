@@ -2,8 +2,6 @@
 
 Cherry is a graphical user interface (GUI) desktop app that helps you manage your upcoming tasks.
 
-![Logo](./Ui.png)
-
 ## Getting Started
 
 To launch the chat bot, run the following command in the terminal:
@@ -96,3 +94,6 @@ The tasks will be displayed similar to the following format:
 2. [E][] event competition (from: Feb 25 2025 to: Feb 27 2025)
 ```
 
+## Sample Gui
+
+![Logo](./Ui.png)
