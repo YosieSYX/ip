@@ -26,7 +26,7 @@ Tasks can be of the 3 categories: todo, deadline, event
 
 Command format:
 
-`todo [task name] /by [end date]`
+`todo [task name]`
 
 `deadline [task name] /by [end date]`
 
